@@ -27,7 +27,7 @@ int CambioNumero(int ultimo,int pares[]){
 int main(){
 	int i,pares[10],cuenta,ultimo;
 	
-	
+	NumPares(pares);
 	printf("Ingrese su numero de cuenta: ");
 	scanf("%d",&cuenta);
 	ultimo = cuenta%10;
