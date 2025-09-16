@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct{
+    char nombre[25];
+    char edad[5];
+    char calificaciones[5];
+}Alumno;
+
+void CapturaDatos(int n,Alumno *alumno);
+void Promedio_y_Cali(int n,Alumno *alumno);
+void TablaAlumno(int n,Alumno *alumno); 
+
+int main(){
+    char respuesta;
+    
+    do{
+    system("cls");
+	int n;
+    Alumno *alumno;
+    printf("\nCuantos alumnos desea ingresar: ");
+    scanf("%d",&n);
+    getchar();  
+    
+    alumno=(Alumno*)malloc(n * sizeof(Alumno));
+    if(alumno==NULL){  
+        printf("Error al asignar memoria\n");
+        return 1;
+    }
+    
+    CapturaDatos(n,alumno);
+    TablaAlumno(n,alumno);  
+    Promedio_y_Cali(n,alumno);
+    
+    free(alumno); 
+    
+    printf("Desea agregar mas alumnos (S/N): ");
+    scanf(" %c",&respuesta);
+}while(respuesta == 'S'|| respuesta=='s');
+    return 0;
+}
+
+void CapturaDatos(int n,Alumno *alumno){
+    int i;
+    for(i=0;i<n;i++){
+        printf("\nAlumno %d:\n", i+1);
+        printf("Nombre: ");
+        fgets(alumno[i].nombre,25,stdin);
+        alumno[i].nombre[strcspn(alumno[i].nombre, "\n")] = '\0';  
+        
+        printf("Edad: ");
+        fgets(alumno[i].edad,5,stdin);
+        alumno[i].edad[strcspn(alumno[i].edad, "\n")] = '\0'; 
+        
+        printf("Calificacion: ");  
+        fgets(alumno[i].calificaciones,5,stdin);
+        alumno[i].calificaciones[strcspn(alumno[i].calificaciones, "\n")] = '\0'; 
+    }
+}
+
+void Promedio_y_Cali(int n,Alumno *alumno){
+    int i,Edad,Cali;
+    float promedioEdad,promedioCali,suma1=0,suma2=0;
+    for(i=0;i<n;i++){
+        Edad=atoi(alumno[i].edad);
+        Cali=atoi(alumno[i].calificaciones);
+        
+        suma1+=Edad;
+        suma2+=Cali;
+    }
+    promedioEdad = suma1/n;
+    promedioCali = suma2/n;
+    printf("\n");
+    printf("_________________Promedios_________________\n");
+    printf("\nPromedio edad: %.2f\n",promedioEdad);  
+    printf("\nPromedio  grupal: %.2f\n\n",promedioCali); 
+}
+
+void TablaAlumno(int n,Alumno *alumno){  
+    int i; 
+	printf("__________________Datos en orden inverso___________________\n");
+    printf("___________________________________________________________\n");
+    printf("\n|%-25s| %-6s |%-12s|","Nombre","Edad","Calificaciones");  
+    printf("\n----------------------------------------------------------\n");
+    for(i = n - 1; i >= 0; i--){
+        printf("|%-25s| %-6s |%-12s|\n", alumno[i].nombre, alumno[i].edad, alumno[i].calificaciones); 
+    }
+    printf("----------------------------------------------------------\n");
+}
