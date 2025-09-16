@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char respuesta;
+
+    do {
+        int longitud, tamano, i, j;
+        char **matriz, cadena[100], letra;
+        
+        printf("Ingrese una palabra (SOLO MAYUSCULAS): ");
+        scanf("%s", cadena);
+        
+        longitud = strlen(cadena);
+        
+        matriz = (char **)malloc(longitud * sizeof(char *));
+        if (matriz == NULL) {
+            printf("Error al asignar memoria\n");
+            return 1;
+        }
+        
+        printf("\n________________________________\n");
+        printf("Resultado para: %s\n", cadena);
+        printf("\n___________________________________\n");
+        
+        for (i = 0; i < longitud; i++) {
+            letra = cadena[i];
+            
+            if (isupper(letra)) {
+                tamano = letra - 'A' + 1;
+                
+                matriz[i] = (char *)malloc(tamano * sizeof(char));
+                if (matriz[i] == NULL) {
+                    printf("Error al asignar memoria para %c\n", letra);
+                    continue;
+                }
+               
+                for (j = 0; j < tamano; j++) {
+                    matriz[i][j] = letra;
+                     printf(" %c |", matriz[i][j]);
+                }
+               
+                printf("\n");
+                
+            } else {
+                matriz[i] = NULL;
+                printf("| %c | -> NULL\n", letra);
+            }
+        }
+        for (i = 0; i < longitud; i++) {
+            if (matriz[i] != NULL) {
+                free(matriz[i]);
+            }
+        }
+        free(matriz);
+        
+        printf("\n¿Desea repetir? (s/n): ");
+        scanf(" %c", &respuesta);
+        
+    } while (respuesta == 's' || respuesta == 'S');
+    return 0;
+}
