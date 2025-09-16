@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void Llenado(int filas,int columnas,int **matriz);
+void Primer_Recorrido(int filas,int columnas,int **matriz);
+void Segundo_Recorrido(int filas,int columnas,int **matriz);
+void Tercer_Recorrido(int filas,int columnas,int **matriz);
+
+int main(){
+	int i,filas,columnas,**matriz;
+	do{
+	
+	printf("No. de filas: ");
+	scanf("%d",&filas);
+	
+	if(filas>10){
+		printf("Error solo se acepta un maximo de 10 filas\n");
+	}
+	
+	}while(filas>10 || filas <=0);
+	
+
+		
+	do{
+	
+	printf("No. de columnas: ");
+	scanf("%d",&columnas);
+	
+	if(columnas>10){
+		printf("Error solo se acepta un maximo de 10 filas\n");
+	}
+	
+	}while(columnas>10 || columnas <=0);
+	
+	
+	
+	
+	
+
+	matriz=(int**)malloc(filas * sizeof(int*));
+	if(matriz==NULL){
+		printf("Error al asignar memoria\n");
+		return 1;
+	}
+	
+	for(i=0;i<filas;i++){
+		matriz[i]=(malloc(columnas*sizeof(int)));
+	}
+	
+	printf("\n");
+	printf("MATRIZ ALEATORIA \n ");
+	Llenado(filas,columnas,matriz);
+	printf("::::::::::::::::: 1er Recorrido:::::::::::::\n");
+	Primer_Recorrido(filas,columnas,matriz);
+	printf("\n\n");
+	printf("::::::::::::::::: 2do Recorrido:::::::::::::\n");
+	Segundo_Recorrido( filas,columnas,matriz);
+		printf("\n\n");
+	printf("::::::::::::::::: 3er Recorrido:::::::::::::\n");
+	Tercer_Recorrido(filas,columnas,matriz);
+	
+	
+	return 0;
+	
+}
+
+void Llenado(int filas,int columnas,int **matriz){
+	int i,j;
+	for(i=0;i<filas;i++){
+		for(j=0;j<columnas;j++){
+			matriz[i][j]=rand()%50+1;
+			printf("%4d",matriz[i][j]);
+		}
+		 printf("\n\n");
+	}
+}
+
+void Primer_Recorrido(int filas,int columnas,int **matriz){
+		int i,j;
+	for(i=0;i<filas;i++){
+		for(j=0;j<columnas;j++){
+		
+			printf("%d\t",matriz[i][j]);
+		}	
+	}
+}
+
+void Segundo_Recorrido(int filas,int columnas,int **matriz){
+	int i,j;
+	for(j=columnas-1;j>=0;j--){
+		for(i=filas-1;i>=0;i--){
+			printf("%d\t",matriz[i][j]);
+		}
+	}
+}
+
+void Tercer_Recorrido(int filas,int columnas,int **matriz){
+	int i,j;
+	
+	for(i=0;i<filas;i++){
+		for(j=0;j<columnas;j++){
+		if(i==j){
+			printf("%d \t",matriz[i][j]);
+			}
+		}	
+	}
+	
+}
